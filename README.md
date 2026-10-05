@@ -2,7 +2,7 @@
 
 **Tes projets, allumés.** Braise lance tes projets locaux d'un clic, montre leurs logs en direct et ouvre le navigateur dès qu'ils sont prêts. Pour les devs, les PO et les designers, sans ouvrir un seul terminal. Sur Mac, Windows et Linux.
 
-![Braise : un projet allumé, ses trois services et ses logs](assets/braise-logs.png)
+![Braise : l'accueil avec les projets allumés et ce qu'ils coûtent à l'ordinateur](assets/braise-home.png)
 
 ## Installation
 
@@ -52,41 +52,72 @@ curl -fsSL https://raw.githubusercontent.com/TomRetouret/braise-releases/main/in
 
 Sur Windows : `$env:BRAISE_VERSION = "v0.6.0"` avant la commande.
 
-**Ce qu'il te faut** : Braise ne remplace pas tes outils, il lance ce que tes projets utilisent déjà (Docker Desktop ou OrbStack, Node, Java…). Pour l'onglet Git, il te faut Git et un accès déjà configuré à tes dépôts (clé SSH, trousseau ou gestionnaire d'identifiants Git).
+**Ce qu'il te faut** : Braise lance ce que tes projets utilisent (Docker Desktop ou OrbStack, Node, Java…) et propose d'installer ce qui manque. Pour l'onglet Git, il te faut Git et un accès déjà configuré à tes dépôts (clé SSH, trousseau ou gestionnaire d'identifiants Git).
 
 ## Bien démarrer
 
-1. **Ajoute un projet** : glisse son dossier sur la fenêtre, ou ⌘N. Pour en ajouter plusieurs d'un coup, choisis « importer tout un dossier » et indique par exemple `~/Projects`.
+1. **Ajoute un projet** : glisse son dossier sur la fenêtre, ou ⌘N. Le projet n'est pas encore sur ton ordinateur ? Onglet « Depuis Git » : colle le lien du dépôt (GitHub, GitLab…) ou connecte-toi à GitHub pour le choisir dans la liste, Braise le télécharge. Pour en ajouter plusieurs d'un coup, choisis « importer tout un dossier » et indique par exemple `~/Projects`.
 2. **Vérifie la proposition** : Braise lit le projet (docker compose, Gradle, Maven, npm, pnpm, yarn, Makefile…), trouve les services et recommande la bonne commande pour chacun.
 3. **Lance** : la base, puis l'API, puis le front, chacun attendant que le précédent soit prêt. L'adresse à ouvrir s'affiche dès que tout est prêt.
 
 ## Ce que Braise sait faire
 
+### Démarrer un projet sans connaître le projet
+
+- **Projets depuis Git** : colle le lien d'un dépôt GitHub ou GitLab, ou connecte-toi à GitHub et choisis dans la liste. Braise télécharge le projet, trouve comment le lancer et propose d'installer ce qui manque.
+- **Ce qui manque s'installe en un clic** : juste après l'ajout d'un projet, une fenêtre liste ce qu'il faut (Node, pnpm ou yarn, Java, Docker Desktop, dépendances, `.env`). Coche, valide, suis la barre de progression : le projet démarre à la fin. Java est téléchargé pour le projet seulement, sans toucher au reste de l'ordinateur. Docker éteint : « Démarrer OrbStack » ; Java trop récent pour Gradle : « Utiliser Java 21 ». Une commande manque au lancement (`mvn`…) : Braise propose aussi de l'installer.
 - **Plusieurs services, dans le bon ordre** : base, API et front démarrent l'un après l'autre. Un clic arrête tout proprement, conteneurs et ports compris.
 - **Ton environnement, sans configuration** : les commandes tournent dans ton shell, avec nvm, sdkman et Homebrew. `nvm use` est automatique si le projet a un `.nvmrc`.
-- **Prérequis vérifiés avant de lancer**, avec un bouton pour corriger :
-  - Docker éteint : « Démarrer OrbStack » ;
-  - dépendances manquantes : « Installer » ;
-  - `.env` absent : « Copier .env.example » ;
-  - Java trop récent pour Gradle : « Utiliser Java 21 ».
+- **Port déjà pris** : Braise prend un autre port libre tout seul quand le projet le propose, sinon il dit qui occupe le port et propose de l'arrêter.
+
+![Préparer le projet : Braise liste ce qui manque et l'installe](assets/braise-setup.png)
+
+### Suivre ce qui tourne
+
+- **Accueil** (⌘0) : ce qui tourne, ce que ça coûte à ton ordinateur (mémoire par projet, processeur, Docker, disque) et l'action utile, comme arrêter les projets oubliés ou tous les projets d'un coup.
+- **Adresses fixes** : chaque projet a sa propre adresse, `http://monprojet.localhost:1355`, qui ne change pas quand le port change. Un service précis : `api.monprojet.localhost:1355`.
 - **Logs lisibles** : couleurs, filtre par service ou par erreurs, recherche, et « Copier pour un dev » pour demander de l'aide sur Slack.
-- **Port déjà pris** : Braise dit qui l'occupe et propose de l'arrêter ou de prendre un autre port.
+- **Barre de menus** (zone de notification sur Windows et Linux) : tes projets allumés et les 6 derniers lancés, à démarrer sans ouvrir la fenêtre. Fermer la fenêtre peut laisser tourner les projets.
+- **Notifications et sons** : notification « prêt » et « arrêté sur erreur » ; trois sons distincts (démarrage, erreur, arrêt), chacun activable séparément, volume réglable.
+
+![Un projet allumé : ses trois services, son adresse fixe et ses logs](assets/braise-logs.png)
+
+### Recetter une évolution
+
+- **Tester ce que l'IA propose** : les branches poussées par Claude, Codex ou Cursor apparaissent dans « Proposées par l'IA » (⌘T). Tu peux aussi coller le lien d'une pull request ou d'une merge request. Un clic pour tester, un clic pour « Revenir où j'étais » : ton travail en cours est mis de côté puis rendu.
 - **Git intégré** :
   - changer de branche et relancer d'un geste ;
   - récupérer les nouveautés, voir les modifications, valider, pousser ;
   - ouvrir la merge request.
 
   Tes modifications ne sont jamais perdues : elles vont dans « Mis de côté ».
-- **Tester ce que l'IA propose** : les branches poussées par Claude, Codex ou Cursor apparaissent dans « Proposées par l'IA » (⌘T). Tu peux aussi coller le lien d'une pull request ou d'une merge request. Un clic pour tester, un clic pour « Revenir où j'étais » : ton travail en cours est mis de côté puis rendu.
-- **Actions rapides** : « Réinitialiser la base », « Charger les données de démo », « Lancer les tests »… Braise les propose d'après les scripts du projet, tu les lances depuis le menu ••• ou ⌘P.
-- **Profils de lancement** : « Front seul », « Démo client »… seulement certains services, ou d'autres réglages.
-- **Ticket Jira** : la clé du ticket (ACT-412) est repérée dans le nom de la branche et s'ouvre en un clic.
+- **Ticket Jira** : la clé du ticket (PRJ-412) est repérée dans le nom de la branche et s'ouvre en un clic.
 - **Tester sur téléphone** : « Sur mobile » affiche un QR code. Ton téléphone doit être sur le même Wi-Fi que l'ordinateur.
-- **Recette partagée** : coche « Enregistrer la configuration dans le dépôt du projet » et commite le fichier `.braise.json`. Tes collègues n'auront rien à configurer. Le fichier ne contient ni secret ni chemin propre à ton ordinateur. Avant d'exécuter des commandes venues du fichier d'un collègue, Braise te les montre et te demande « Faire confiance ».
-- **Barre de menus** (zone de notification sur Windows et Linux) : tes projets allumés et les 6 derniers lancés, à démarrer sans ouvrir la fenêtre. Fermer la fenêtre peut laisser tourner les projets.
-- **Notifications** : « prêt » et « arrêté sur erreur », quand Braise est en arrière-plan.
+
+![Tester une proposition : les branches de l'IA, les récentes et celles du serveur](assets/braise-test.png)
 
 ![L'onglet Git : branche servie, nouveautés à récupérer, modifications et diff](assets/braise-git.png)
+
+![Sur mobile : un QR code pour ouvrir le projet sur ton téléphone](assets/braise-mobile.png)
+
+### Préparer les données de recette
+
+- **Onglet « Données »** : les tables de la base du projet, en lecture seule, avec le nombre de lignes, une recherche dans toutes les colonnes, des filtres par colonne et le détail d'une ligne à copier. La base du projet est éteinte ? « Démarrer la base seule ».
+- **Instantanés** : « Sauvegarder l'état » garde une copie de la base, « Remplacer les données » y revient en un clic. Braise garde aussi un instantané de sécurité avant chaque retour, et en prend un tout seul avant de tester une branche.
+- **Jeux de données** : un état devient un jeu nommé, avec sa description, les cas couverts et les comptes de test. Exporte-le en fichier `.braisedata`, importe celui d'un collègue, ou partage-le dans le dépôt (`.braise/datasets/`) pour que toute l'équipe le charge en un clic.
+- **Sans risque** : Braise ne touche qu'aux bases de ton ordinateur (le `docker compose` du projet). Il lit les identifiants dans le projet à chaque fois et ne les enregistre nulle part. Un jeu venu d'une version plus récente du code n'est pas chargé.
+
+![L'onglet Données : tables, filtre sur une colonne et détail d'une ligne](assets/braise-data.png)
+
+![Instantanés et jeux de données : partagés dans le dépôt ou gardés sur l'ordinateur](assets/braise-datasets.png)
+
+### Partager et personnaliser
+
+- **Recette partagée** : coche « Enregistrer la configuration dans le dépôt du projet » et commite le fichier `.braise.json`. Tes collègues n'auront rien à configurer. Le fichier ne contient ni secret ni chemin propre à ton ordinateur. Avant d'exécuter des commandes venues du fichier d'un collègue, Braise te les montre et te demande « Faire confiance ».
+- **Actions rapides** : « Réinitialiser la base », « Charger les données de démo », « Lancer les tests »… Braise les propose d'après les scripts du projet, tu les lances depuis le menu ••• ou ⌘P.
+- **Profils de lancement** : « Front seul », « Démo client »… seulement certains services, ou d'autres réglages.
+- **Thème clair ou sombre**, ou comme le système (Réglages, Apparence).
+- **Réglages de Braise** (bouton en bas de la liste, ou ⌘,) : valeurs par défaut des nouveaux projets, sons et notifications, fermeture de la fenêtre, compte GitHub, liste des raccourcis clavier, mises à jour.
 
 ## Raccourcis
 
@@ -95,6 +126,7 @@ Sur Windows et Linux, remplace ⌘ par Ctrl.
 | Raccourci | Action |
 | --- | --- |
 | ⌘N | Nouveau projet |
+| ⌘0 | Accueil |
 | ⌘P | Palette : toutes les actions au clavier |
 | ⌘K | Chercher un projet |
 | ⌘R | Lancer ou relancer |
@@ -104,7 +136,8 @@ Sur Windows et Linux, remplace ⌘ par Ctrl.
 | ⌘T | Tester une proposition (branche de l'IA, PR, MR) |
 | ⌘F | Chercher dans les logs |
 | ⌘L et ⌘G | Onglets Logs et Git |
-| ⌘, | Réglages du projet |
+| ⌘, | Réglages de Braise |
+| ⌘I | Réglages du projet |
 | ⌘1 à ⌘9 | Aller au projet n |
 
 ## Questions fréquentes
