@@ -38,6 +38,18 @@ curl -fsSL https://raw.githubusercontent.com/TomRetouret/braise-releases/main/in
 
 Braise s'installe dans `~/.local/share/braise` (AppImage), avec une entrée dans le menu des applications et la commande `braise`. Testé sur Ubuntu 22.04 et 24.04, processeurs x86_64. Le paquet `.deb` est aussi dans [Releases](https://github.com/TomRetouret/braise-releases/releases), mais seule l'AppImage se met à jour toute seule.
 
+### Serveur Linux (Braise Server)
+
+Braise peut aussi tourner sur un serveur Linux, chez toi ou ailleurs, et se piloter depuis le navigateur d'un autre appareil : même interface, projets du serveur, logs en direct, Git. Sur le serveur, avec ton utilisateur habituel (pas root) :
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/TomRetouret/braise-releases/main/install-server.sh | sh
+```
+
+Le script vérifie le téléchargement, te demande le mot de passe de connexion, crée le service qui démarre avec le serveur et propose l'accès HTTPS par Tailscale s'il est installé. Il affiche ensuite l'adresse à ouvrir, par exemple `http://192.168.1.20:7420`. Pour mettre à jour, relance la même commande. Serveurs x86_64 (Debian 12, Ubuntu 22.04 ou plus récents).
+
+Le mot de passe se choisit sur le serveur uniquement. En HTTP, réserve l'accès à ton réseau local ; depuis l'extérieur, passe par Tailscale plutôt que d'ouvrir un port sur ta box.
+
 ### Ce que fait la commande
 
 1. Elle lit la dernière version publiée ici.
@@ -111,6 +123,17 @@ Sur Windows : `$env:BRAISE_VERSION = "v0.6.0"` avant la commande.
 
 ![Instantanés et jeux de données : partagés dans le dépôt ou gardés sur l'ordinateur](assets/braise-datasets.png)
 
+### Piloter Braise depuis ton assistant IA
+
+- **Claude, Claude Code ou Cursor** : Réglages, « Assistants IA », Connecter. Ensuite, demande simplement : « Lance Atelier Lumen sur la branche du ticket LUM-415, charge le jeu facturation et donne-moi l'adresse ».
+- **Ce que l'IA peut faire** : allumer, arrêter, relancer, lire les logs et comprendre pourquoi ça plante, tester une proposition ou une PR puis revenir où tu étais, sauvegarder l'état de la base ou en faire un jeu de données.
+- **Ce qui te demande ta validation** : remplacer les données, ou tester une proposition qui change les commandes de lancement. Braise te prévient par une notification et te montre ce qui va se passer.
+- **Tes données restent protégées** : la lecture de la base est désactivée par défaut, projet par projet. Les colonnes personnelles (nom, email, téléphone, IBAN…) sont toujours masquées, et les emails, jetons et clés sont retirés des logs.
+- **Anonymisation** (Réglages, Assistants IA, ou projet par projet) : les noms, emails, téléphones, adresses et IBAN sont remplacés par des pseudonymes cohérents avant d'être envoyés à l'IA. Elle peut suivre « Prénom3 Nom3 » d'une ligne à l'autre sans jamais connaître la vraie personne.
+- **Tu gardes la main** : « Couper » sur un projet, ou « Couper l'accès des assistants IA » depuis la barre de menus. Chaque action de l'IA est notée dans les logs du projet.
+
+![Une demande de Claude à valider dans Braise](assets/braise-ai.png)
+
 ### Partager et personnaliser
 
 - **Recette partagée** : coche « Enregistrer la configuration dans le dépôt du projet » et commite le fichier `.braise.json`. Tes collègues n'auront rien à configurer. Le fichier ne contient ni secret ni chemin propre à ton ordinateur. Avant d'exécuter des commandes venues du fichier d'un collègue, Braise te les montre et te demande « Faire confiance ».
@@ -151,6 +174,9 @@ Braise lance les commandes avec l'invite de commandes Windows (cmd). Une command
 **macOS dit que l'app est endommagée ou ne peut pas être ouverte.**
 Cela arrive si l'app a été téléchargée avec un navigateur au lieu de la commande d'installation. Relance simplement la commande `curl` ci-dessus. Braise n'est pas notarisé par Apple : la commande d'installation est la façon prévue de l'installer.
 
+**Mon assistant IA ne voit pas Braise.**
+Après « Connecter », redémarre complètement l'assistant (Claude Desktop, Cursor, ou une nouvelle session Claude Code). Braise doit être ouvert : s'il est fermé, l'assistant te le dira. Vérifie aussi que « Autoriser les assistants IA » est activé dans les Réglages.
+
 **Un outil est « introuvable » alors qu'il marche dans mon terminal.**
 Clique sur « Revérifier ». Si le message persiste, vérifie que l'outil est bien chargé par ton `~/.zshrc` ou `~/.zprofile`, car Braise utilise le même shell que toi.
 
@@ -165,6 +191,7 @@ Uniquement sur ton ordinateur : `~/Library/Application Support/fr.quatresh.brais
 - **Mac** : glisse `~/Applications/Braise.app` dans la corbeille.
 - **Windows** : Paramètres, Applications, Braise, Désinstaller.
 - **Linux** : `curl -fsSL https://raw.githubusercontent.com/TomRetouret/braise-releases/main/install.sh | BRAISE_UNINSTALL=1 sh`
+- **Braise Server** : `curl -fsSL https://raw.githubusercontent.com/TomRetouret/braise-releases/main/install-server.sh | BRAISE_UNINSTALL=1 sh` (projets et mot de passe gardés dans `~/.local/share/braise-server`, `BRAISE_PURGE=1` en plus pour tout effacer)
 
 Pour effacer aussi la liste de tes projets, supprime le dossier de données indiqué plus haut.
 
