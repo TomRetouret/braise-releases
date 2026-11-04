@@ -184,7 +184,7 @@ Clique sur « Revérifier ». Si le message persiste, vérifie que l'outil est b
 Braise attend un signal « prêt » dans les logs ou l'ouverture du port. Indique le port attendu dans les réglages du service.
 
 **Où sont mes données ?**
-Uniquement sur ton ordinateur : `~/Library/Application Support/fr.quatresh.braise` sur Mac, `%APPDATA%\fr.quatresh.braise` sur Windows, `~/.local/share/fr.quatresh.braise` sur Linux. Braise n'envoie rien et ne stocke aucun identifiant.
+Uniquement sur ton ordinateur : `~/Library/Application Support/app.braise` sur Mac, `%APPDATA%\app.braise` sur Windows, `~/.local/share/app.braise` sur Linux. Braise n'envoie rien et ne stocke aucun identifiant.
 
 ## Désinstaller
 
