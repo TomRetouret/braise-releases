@@ -11,7 +11,7 @@
 #      des applications et la commande `braise` ;
 #   4. l'ouvre. Aucun mot de passe administrateur.
 # Désinstaller (Mac) : glisser ~/Applications/Braise.app à la corbeille, et supprimer
-# ~/Library/Application Support/fr.quatresh.braise pour effacer la liste des projets.
+# ~/Library/Application Support/app.braise pour effacer la liste des projets.
 # Désinstaller (Linux) : ... | BRAISE_UNINSTALL=1 sh
 
 set -eu
@@ -86,7 +86,7 @@ if [ -n "${BRAISE_UNINSTALL:-}" ]; then
   [ "$OS" = "Linux" ] || fail "sur Mac, glisse ~/Applications/Braise.app à la corbeille."
   rm -f "$LBIN" "$LDESK" "$LDIR/Braise.AppImage" "$LDIR/braise.png"
   rmdir "$LDIR" 2>/dev/null || true
-  say "Braise est désinstallé. Ta liste de projets reste dans ~/.local/share/fr.quatresh.braise (supprime ce dossier pour l'effacer)."
+  say "Braise est désinstallé. Ta liste de projets reste dans ~/.local/share/app.braise (supprime ce dossier pour l'effacer)."
   exit 0
 fi
 
